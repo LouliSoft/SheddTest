@@ -3,6 +3,8 @@ package com.m2f.sheddtest.presentation.core.extensions
 import android.databinding.BindingAdapter
 import android.databinding.ObservableField
 import android.view.View
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 
 /**
  * @author Marc Moreno
@@ -17,4 +19,9 @@ operator fun <T> ObservableField<T>.invoke(t: T) = this.set(t)
 @BindingAdapter("android:visibility")
 fun View.visibility(isVisible: Boolean) {
     this.visibility = if (isVisible) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("bind:url")
+fun ImageView.loadImage(imageUrl: String) {
+    Glide.with(context).load(imageUrl).into(this@loadImage)
 }
