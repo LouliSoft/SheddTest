@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SheddTest</string>
     <string name="write_something_to_search_related_images">write something to search related images</string>
+    <string name="there_isn_t_any_result_for_the_current_topic">There isn\'t any result\nfor the current topic</string>
 </resources>
