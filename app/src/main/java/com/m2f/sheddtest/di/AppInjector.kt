@@ -3,12 +3,9 @@ package com.m2f.sheddtest.di
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import com.m2f.sheddtest.presentation.main.BaseActivity
 import com.m2f.sheddtest.presentation.main.SheddApplication
 import dagger.android.AndroidInjection
-import dagger.android.support.AndroidSupportInjection
 
 
 /*
@@ -41,14 +38,6 @@ internal fun SheddApplication.initInjection() {
         override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
             if (activity is BaseActivity) {
                 AndroidInjection.inject(activity)
-                activity.supportFragmentManager.registerFragmentLifecycleCallbacks(
-                        object : FragmentManager.FragmentLifecycleCallbacks() {
-                            override fun onFragmentCreated(fm: FragmentManager?, f: Fragment, savedInstanceState: Bundle?) {
-                                if (f is Injectable) {
-                                    AndroidSupportInjection.inject(f)
-                                }
-                            }
-                        }, true)
             }
         }
 
