@@ -15,6 +15,7 @@ class SearchActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //As the viewModel is lifecycle aware it's behaviour over config changes it's already controlled (try to make a screen rotation for instance)
         binding.vm = searchViewModel
 
     }
