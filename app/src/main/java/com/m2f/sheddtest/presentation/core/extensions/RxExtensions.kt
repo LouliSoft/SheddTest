@@ -1,4 +1,4 @@
-package com.m2f.sheddtest.presentation.core
+package com.m2f.sheddtest.presentation.core.extensions
 
 import android.databinding.Observable
 import android.databinding.ObservableField
