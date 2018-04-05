@@ -24,6 +24,7 @@ buildscript {
     ext.supportVersion = '27.1.0'
     ext.databindingVersion = '2.3.0'
     ext.playServicesVersion = '12.0.0'
+    ext.flexBoxVersion = '0.3.2'
     //endregion
 
     //region network
@@ -37,6 +38,7 @@ buildscript {
     //region utils
     ext.glideVersion = '4.6.1'
     //endregion
+
     repositories {
         google()
         jcenter()

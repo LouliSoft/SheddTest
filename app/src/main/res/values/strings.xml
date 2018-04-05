@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SheddTest</string>
+    <string name="write_something_to_search_related_images">write something to search related images</string>
 </resources>
