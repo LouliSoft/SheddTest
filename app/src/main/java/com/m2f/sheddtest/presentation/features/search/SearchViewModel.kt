@@ -8,17 +8,20 @@ import com.m2f.sheddtest.domain.features.search.model.TopicImage
 import com.m2f.sheddtest.presentation.core.extensions.invoke
 import com.m2f.sheddtest.presentation.core.extensions.observe
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.processors.BehaviorProcessor
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * @author Marc Moreno
  * @since 5/4/18.
  */
 class SearchViewModel
-@Inject constructor(private val searchImagesInteractor: SearchImagesInteractor) : ViewModel() {
+@Inject constructor(private val searchImagesInteractor: SearchImagesInteractor,
+                    @Named("History") private val history: BehaviorProcessor<List<String>>) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -27,6 +30,8 @@ class SearchViewModel
     val isResultEmpty = ObservableField(true)
 
     val topicList = ObservableField<List<TopicImage>>(listOf())
+
+    val searchHistory = ObservableField<List<String>>(listOf())
 
     init {
         compositeDisposable += searchText.observe()
@@ -39,6 +44,9 @@ class SearchViewModel
                     isResultEmpty(it.isEmpty())
                     topicList(it)
                 })
+
+        //everytime that history changes then we update the searchHistory
+        compositeDisposable += history.subscribeBy(onNext = { searchHistory(it) })
     }
 
     override fun onCleared() {

@@ -15,7 +15,9 @@ import com.twitter.sdk.android.core.services.SearchService
 import com.twitter.sdk.android.core.services.StatusesService
 import dagger.Module
 import dagger.Provides
+import io.reactivex.processors.BehaviorProcessor
 import java.util.concurrent.*
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module(includes = arrayOf(ViewModelModule::class))
@@ -66,5 +68,10 @@ class ApplicationModule {
     //this cache only lasts for 10 minutes. As this is a cache is just working while the app is alive!
     @Provides
     @Singleton
-    fun providesCache(): ExpiringLruCache<String, List<TopicImage>> = ExpiringLruCache(1, TimeUnit.MINUTES.toMillis(10))
+    fun providesCache(): ExpiringLruCache<String, List<TopicImage>> = ExpiringLruCache(100, TimeUnit.MINUTES.toMillis(10))
+
+    @Provides
+    @Singleton
+    @Named("History")
+    fun providesHistory(cache : ExpiringLruCache<String, List<TopicImage>>): BehaviorProcessor<List<String>> = cache.keys
 }

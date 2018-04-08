@@ -3,8 +3,11 @@ package com.m2f.sheddtest.presentation.core.extensions
 import android.databinding.BindingAdapter
 import android.databinding.ObservableField
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.m2f.sheddtest.R
 
 /**
  * @author Marc Moreno
@@ -24,4 +27,11 @@ fun View.visibility(isVisible: Boolean) {
 @BindingAdapter("bind:url")
 fun ImageView.loadImage(imageUrl: String) {
     Glide.with(context).load(imageUrl).into(this@loadImage)
+}
+
+@BindingAdapter("bind:sugestions")
+fun AutoCompleteTextView.bindSuggestionsToEditText(sugestions: List<String>) {
+    val arrayAdapter = ArrayAdapter<String>(context, R.layout.simple_list_item, sugestions)
+    setAdapter<ArrayAdapter<String>>(arrayAdapter)
+    threshold = 0
 }

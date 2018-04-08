@@ -2,6 +2,8 @@ package com.m2f.sheddtest.data.persistency
 
 import android.os.SystemClock
 import android.util.LruCache
+import io.reactivex.processors.BehaviorProcessor
+import io.reactivex.processors.PublishProcessor
 import java.io.Serializable
 import java.util.*
 
@@ -27,7 +29,8 @@ class ExpiringLruCache<K, V>
     @Synchronized
     fun put(key: K, value: V) {
         mCache.put(key, value)
-        mExpirationTimes.put(key, elapsedRealtime() + mExpireTime)
+        mExpirationTimes[key] = elapsedRealtime() + mExpireTime
+        keys.onNext(mCache.snapshot().keys.toList())
     }
 
     internal fun elapsedRealtime(): Long {
@@ -120,4 +123,7 @@ class ExpiringLruCache<K, V>
     operator fun set(key: K, value: V) {
         put(key, value)
     }
+
+    //with this processor we'll ensure that whoever is observing it will have the most updated list
+    val keys = BehaviorProcessor.create<List<K>>()
 }
