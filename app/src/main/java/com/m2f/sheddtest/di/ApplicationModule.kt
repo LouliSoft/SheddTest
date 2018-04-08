@@ -3,6 +3,9 @@ package com.m2f.sheddtest.di
 import com.m2f.sheddtest.data.executor.JobExecutor
 import com.m2f.sheddtest.domain.PostExecutionThread
 import com.m2f.sheddtest.presentation.core.MainThread
+import com.twitter.sdk.android.core.TwitterApiClient
+import com.twitter.sdk.android.core.TwitterCore
+import com.twitter.sdk.android.core.services.StatusesService
 import dagger.Module
 import dagger.Provides
 import java.util.concurrent.*
@@ -36,4 +39,12 @@ class ApplicationModule {
             return Thread(runnable, "android_" + counter++)
         }
     }
+
+    @Provides
+    @Singleton
+    fun providesTwitterApiClient(): TwitterApiClient = TwitterCore.getInstance().apiClient
+
+    @Provides
+    @Singleton
+    fun providesStatusesService(apiClient: TwitterApiClient): StatusesService = apiClient.statusesService
 }

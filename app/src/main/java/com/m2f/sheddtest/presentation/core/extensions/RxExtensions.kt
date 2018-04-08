@@ -5,6 +5,7 @@ import android.databinding.ObservableField
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.FlowableEmitter
+import io.reactivex.SingleEmitter
 import android.databinding.Observable as DatabindingObservable
 
 
@@ -15,6 +16,12 @@ import android.databinding.Observable as DatabindingObservable
 
 infix fun <E : FlowableEmitter<*>> E.canEmitt(block: E.() -> Unit) {
     if (this.isCancelled.not()) {
+        block()
+    }
+}
+
+infix fun <E : SingleEmitter<*>> E.canEmitt(block: E.() -> Unit) {
+    if (this.isDisposed.not()) {
         block()
     }
 }

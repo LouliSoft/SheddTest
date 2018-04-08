@@ -5,6 +5,9 @@ import android.app.Application
 import android.os.StrictMode
 import com.m2f.sheddtest.BuildConfig
 import com.m2f.sheddtest.di.initInjection
+import com.twitter.sdk.android.core.Twitter
+import com.twitter.sdk.android.core.TwitterAuthConfig
+import com.twitter.sdk.android.core.TwitterConfig
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import javax.inject.Inject
@@ -37,6 +40,9 @@ class SheddApplication : Application(), HasActivityInjector {
         }
 
         initInjection()
+        Twitter.initialize(TwitterConfig.Builder(this)
+                .twitterAuthConfig(TwitterAuthConfig("83qYjCuvllfOEk8OeHi7w","LIFKEAIw7VZfojW0d5ZYRuBksHtEqCjr8FtzlJHvEtw"))
+                .debug(BuildConfig.DEBUG).build())
     }
 
 }
