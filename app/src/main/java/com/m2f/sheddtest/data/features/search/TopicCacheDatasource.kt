@@ -5,7 +5,6 @@ import com.m2f.sheddtest.domain.features.search.model.TopicImage
 import com.m2f.sheddtest.presentation.core.extensions.canEmitt
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,10 +14,7 @@ import javax.inject.Singleton
  */
 @Singleton
 class TopicCacheDatasource
-@Inject constructor() : TopicDatasource {
-
-    //this cache only lasts for 10 minutes. As this is a cache is just working while the app is alive!
-    private val cache = ExpiringLruCache<String, List<TopicImage>>(1, TimeUnit.MINUTES.toMillis(10))
+@Inject constructor(private val cache: ExpiringLruCache<String, List<TopicImage>>) : TopicDatasource {
 
     override fun findImages(topic: String): Flowable<List<TopicImage>> = Flowable.defer {
         Flowable.create<List<TopicImage>>({ emitter ->
@@ -32,4 +28,5 @@ class TopicCacheDatasource
     fun storeImages(topic: String, images: List<TopicImage>) {
         cache[topic] = images
     }
+
 }
