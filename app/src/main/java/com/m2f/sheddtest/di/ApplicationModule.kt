@@ -1,10 +1,15 @@
 package com.m2f.sheddtest.di
 
 import com.m2f.sheddtest.data.executor.JobExecutor
+import com.m2f.sheddtest.data.features.search.TopicDatasource
+import com.m2f.sheddtest.data.features.search.TopicRepositoryImpl
+import com.m2f.sheddtest.data.features.search.TwitterDatasource
 import com.m2f.sheddtest.domain.PostExecutionThread
+import com.m2f.sheddtest.domain.features.search.TopicRepository
 import com.m2f.sheddtest.presentation.core.MainThread
 import com.twitter.sdk.android.core.TwitterApiClient
 import com.twitter.sdk.android.core.TwitterCore
+import com.twitter.sdk.android.core.services.SearchService
 import com.twitter.sdk.android.core.services.StatusesService
 import dagger.Module
 import dagger.Provides
@@ -46,5 +51,13 @@ class ApplicationModule {
 
     @Provides
     @Singleton
-    fun providesStatusesService(apiClient: TwitterApiClient): StatusesService = apiClient.statusesService
+    fun providesSearchService(apiClient: TwitterApiClient): SearchService = apiClient.searchService
+
+    @Provides
+    @Singleton
+    fun providesDatasources(twitterDatasource: TwitterDatasource): Array<TopicDatasource> = arrayOf(twitterDatasource)
+
+    @Provides
+    @Singleton
+    fun providesTopicRepository(topicRepositoryImpl: TopicRepositoryImpl): TopicRepository = topicRepositoryImpl
 }
