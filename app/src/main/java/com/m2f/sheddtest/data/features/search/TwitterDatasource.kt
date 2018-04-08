@@ -11,7 +11,8 @@ import javax.inject.Inject
  * @since 8/4/18.
  */
 class TwitterDatasource
-@Inject constructor(private val searchService: SearchService) : TopicDatasource {
+@Inject constructor(private val searchService: SearchService,
+                    private val topicCacheDatasource: TopicCacheDatasource) : TopicDatasource {
 
     override fun findImages(topic: String): Flowable<List<TopicImage>> = searchService.tweets(topic,
             null,
@@ -28,4 +29,5 @@ class TwitterDatasource
                     .filter { it.entities.media.isNotEmpty() } //we just want tweets with images
                     .flatMap { it.entities.media } //then we flatten the array of images of each tweet
                     .map { TopicImage(it.mediaUrl) }} //to add the in the resulting list of images
+            .doOnNext { topicCacheDatasource.storeImages(topic, it) } //then we store the values in the cache
 }
