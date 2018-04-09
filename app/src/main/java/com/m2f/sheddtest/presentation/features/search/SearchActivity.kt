@@ -1,17 +1,16 @@
 package com.m2f.sheddtest.presentation.features.search
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.design.widget.Snackbar
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
+import com.facebook.FacebookSdk
 import com.facebook.login.LoginManager
 import com.m2f.sheddtest.R
 import com.m2f.sheddtest.databinding.ActivitySearchBinding
 import com.m2f.sheddtest.presentation.main.BaseActivity
-import android.content.Intent
-import com.facebook.CallbackManager
-import com.facebook.AccessToken
-import com.facebook.FacebookSdk
-
-
 
 
 class SearchActivity : BaseActivity() {
@@ -24,7 +23,13 @@ class SearchActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         //As the viewModel is lifecycle aware it's behaviour over config changes it's already controlled (try to make a screen rotation for instance)
-        binding.vm = searchViewModel
+        binding.vm = searchViewModel.apply {
+            searchedTextEvents.observe({ lifecycle }) {
+                it?.let {
+                    Snackbar.make(binding.root, getString(R.string.results, it), Snackbar.LENGTH_LONG).show()
+                }
+            }
+        }
 
         FacebookSdk.sdkInitialize(applicationContext) {
             if (AccessToken.getCurrentAccessToken() == null) {

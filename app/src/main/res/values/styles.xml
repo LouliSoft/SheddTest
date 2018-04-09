@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/whitesmoke</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/white</item>
@@ -12,7 +12,7 @@
         <item name="android:textViewStyle">@style/defaultText</item>
         <item name="editTextStyle">@style/materialStyleEditText</item>
         <item name="buttonStyle">@style/defaultButtonStyle</item>
-        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
         <item name="android:colorBackground">@color/colorPrimary</item>
     </style>
 
@@ -26,7 +26,8 @@
     <style name="materialStyleEditText" parent="@style/Widget.AppCompat.EditText">
         <item name="android:textAppearance">@style/defaultText</item>
         <item name="android:textColor">?android:textColorPrimary</item>
-        <item name="android:textColorHint">?android:textColorSecondary</item>
+        <item name="android:textColorHint">?android:textColorHint</item>
+        <item name="android:backgroundTint">?colorPrimaryDark</item>
         <item name="android:singleLine">true</item>
     </style>
 

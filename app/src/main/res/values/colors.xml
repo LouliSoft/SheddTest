@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <color name="colorPrimary">@color/darkjunglegreen</color>
+    <color name="colorPrimary">@color/mediumturquoise</color>
     <color name="colorPrimaryDark">@color/darkjunglegreen</color>
     <color name="colorAccent">@color/mediumturquoise</color>
     <color name="primaryTextColor">@color/white</color>
