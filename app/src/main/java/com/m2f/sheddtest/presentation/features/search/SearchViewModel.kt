@@ -43,7 +43,8 @@ class SearchViewModel
                     it.forEachIndexed { index, topicImage -> Log.d("Search_text_$index", topicImage.image) }
                     isResultEmpty(it.isEmpty())
                     topicList(it)
-                })
+                },
+                        onError = { /*todo: we shoud treat the error somehow*/ })
 
         //everytime that history changes then we update the searchHistory
         compositeDisposable += history.subscribeBy(onNext = { searchHistory(it) })

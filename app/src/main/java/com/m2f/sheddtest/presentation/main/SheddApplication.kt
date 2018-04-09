@@ -3,6 +3,11 @@ package com.m2f.sheddtest.presentation.main
 import android.app.Activity
 import android.app.Application
 import android.os.StrictMode
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.m2f.sheddtest.BuildConfig
 import com.m2f.sheddtest.di.initInjection
 import com.twitter.sdk.android.core.Twitter
@@ -41,8 +46,21 @@ class SheddApplication : Application(), HasActivityInjector {
 
         initInjection()
         Twitter.initialize(TwitterConfig.Builder(this)
-                .twitterAuthConfig(TwitterAuthConfig("83qYjCuvllfOEk8OeHi7w","LIFKEAIw7VZfojW0d5ZYRuBksHtEqCjr8FtzlJHvEtw"))
+                .twitterAuthConfig(TwitterAuthConfig("83qYjCuvllfOEk8OeHi7w", "LIFKEAIw7VZfojW0d5ZYRuBksHtEqCjr8FtzlJHvEtw"))
                 .debug(BuildConfig.DEBUG).build())
+
+        LoginManager.getInstance().registerCallback(CallbackManager.Factory.create(),
+                object : FacebookCallback<LoginResult> {
+                    override fun onSuccess(result: LoginResult?) {
+                    }
+
+                    override fun onCancel() {
+                    }
+
+                    override fun onError(error: FacebookException?) {
+                    }
+
+                })
     }
 
 }

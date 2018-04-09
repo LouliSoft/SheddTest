@@ -8,6 +8,7 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.Flowable
+import io.reactivex.processors.BehaviorProcessor
 import io.reactivex.subscribers.TestSubscriber
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -31,7 +32,7 @@ class SearchViewModelTest {
                             TopicImage("http://scruss.com/wordpress/wp-content/uploads/2013/06/random20130606210630.png"),
                             TopicImage("https://yt3.ggpht.com/-H7Ofqi47o70/AAAAAAAAAAI/AAAAAAAAAAA/cTBdlRrGTMU/s900-c-k-no-mo-rj-c0xffffff/photo.jpg"),
                             TopicImage("https://k30.kn3.net/taringa/7/7/9/8/3/D/guitar_gero/2B1.jpg"))) //random image
-        })
+        }, BehaviorProcessor.create())
 
         @Nested
         @DisplayName("When we write some text")

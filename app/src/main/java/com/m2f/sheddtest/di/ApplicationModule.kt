@@ -1,9 +1,7 @@
 package com.m2f.sheddtest.di
 
 import com.m2f.sheddtest.data.executor.JobExecutor
-import com.m2f.sheddtest.data.features.search.TopicDatasource
-import com.m2f.sheddtest.data.features.search.TopicRepositoryImpl
-import com.m2f.sheddtest.data.features.search.TwitterDatasource
+import com.m2f.sheddtest.data.features.search.*
 import com.m2f.sheddtest.data.persistency.ExpiringLruCache
 import com.m2f.sheddtest.domain.PostExecutionThread
 import com.m2f.sheddtest.domain.features.search.TopicRepository
@@ -12,7 +10,6 @@ import com.m2f.sheddtest.presentation.core.MainThread
 import com.twitter.sdk.android.core.TwitterApiClient
 import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.services.SearchService
-import com.twitter.sdk.android.core.services.StatusesService
 import dagger.Module
 import dagger.Provides
 import io.reactivex.processors.BehaviorProcessor
@@ -59,7 +56,7 @@ class ApplicationModule {
 
     @Provides
     @Singleton
-    fun providesDatasources(twitterDatasource: TwitterDatasource): Array<TopicDatasource> = arrayOf(twitterDatasource)
+    fun providesDatasources(twitterDatasource: TwitterDatasource, facebookTopicDatasource: FacebookTopicDatasource, dummyTopicDatasource: DummyTopicDatasource): Array<TopicDatasource> = arrayOf(twitterDatasource, dummyTopicDatasource)
 
     @Provides
     @Singleton
@@ -73,5 +70,5 @@ class ApplicationModule {
     @Provides
     @Singleton
     @Named("History")
-    fun providesHistory(cache : ExpiringLruCache<String, List<TopicImage>>): BehaviorProcessor<List<String>> = cache.keys
+    fun providesHistory(cache: ExpiringLruCache<String, List<TopicImage>>): BehaviorProcessor<List<String>> = cache.keys
 }

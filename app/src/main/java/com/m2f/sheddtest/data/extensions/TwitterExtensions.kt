@@ -15,21 +15,23 @@ import retrofit2.Call
 
 inline fun <reified T> Call<T>.observe(): Flowable<T> = Flowable.defer {
     Flowable.create<T> ({ emitter ->
-        emitter canEmitt  {
             object : Callback<T>() {
                 override fun success(result: Result<T>) {
-                    onNext(result.data)
-                    onComplete()
+                    emitter canEmitt {
+                        onNext(result.data)
+                        onComplete()
+                    }
                 }
 
                 override fun failure(exception: TwitterException) {
-                    onError(exception)
+                    emitter canEmitt {
+                        onError(exception)
+                    }
                 }
 
             }.let {
                 enqueue(it)
-                setCancellable { cancel() } //if we cancel the subscription the we cancel the request
+                emitter.setCancellable { cancel() } //if we cancel the subscription the we cancel the request
             }
-        }
     }, BackpressureStrategy.LATEST)
 }
